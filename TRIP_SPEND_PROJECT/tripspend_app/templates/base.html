@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TripSpend Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        overflow-x: hidden;
+      }
+      
+      .wrapper {
+        display: flex;
+      }
+      
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.45);
+      }
+      
+      .sidebar {
+        width: 240px;
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(12px);
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
+      }
+      
+      .sidebar h3 {
+        margin-bottom: 30px;
+        font-weight: bold;
+      }
+      
+      .sidebar a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px 14px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        transition: 0.3s;
+        font-weight: 500;
+      }
+      
+      .sidebar a:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateX(5px);
+      }
+      
+      .main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 25px;
+      }
+      
+      .topbar {
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(10px);
+        padding: 14px 20px;
+        border-radius: 14px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .card {
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.58);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: white;
+        transition: 0.3s;
+      }
+      
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      }
+      
+      .stat-card {
+        min-height: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      
+      .stat-label {
+        font-size: 15px;
+        opacity: 0.85;
+        letter-spacing: 0.5px;
+      }
+      
+      .stat-value {
+        font-size: 40px;
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .trip-card h4 {
+        font-size: 32px;
+      }
+      
+      .trip-location {
+        font-size: 18px;
+        opacity: 0.92;
+      }
+      
+      .trip-info p {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 15px;
+      }
+      
+      .expense-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 14px 16px;
+      }
+      
+      .expense-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+      
+      .expense-value {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      
+      .btn {
+        border-radius: 12px;
+        transition: 0.3s;
+      }
+      
+      .btn:hover {
+        transform: scale(1.03);
+      }
+      
+      .alert {
+        border-radius: 10px;
+      }
+      
+      @media (max-width: 768px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+          min-height: auto;
+        }
+      
+        .main {
+          margin-left: 0;
+          width: 100%;
+        }
+      
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3>✈️ TripSpend</h3>
+
+        <a href="/">🏠 Dashboard</a>
+        <a href="{% url 'trip_create' %}">➕ Create Trip</a>
+
+        <hr style="border-color: rgba(255,255,255,0.15);" />
+
+        {% if user.is_authenticated %}
+          <a href="#">👤 {{ user.username }}</a>
+          <a href="{% url 'logout' %}">🚪 Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}">🔐 Login</a>
+          <a href="{% url 'signup' %}">📝 Sign Up</a>
+        {% endif %}
+      </div>
+
+      <!-- Main -->
+      <div class="main">
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="d-flex align-items-center gap-2">
+            <h5 class="mb-0">Dashboard</h5>
+          </div>
+
+          {% if user.is_authenticated %}
+            <span>Welcome 👋 {{ user.username }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Messages -->
+        {% for message in messages %}
+          <div class="alert alert-warning shadow-sm">{{ message }}</div>
+        {% endfor %}
+
+        <!-- Content -->
+        {% block content %}
+
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

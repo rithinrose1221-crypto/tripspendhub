@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h2 class="fw-bold mb-1">{{ trip.title }}</h2>
+      <p class="mb-0 text-light" style="opacity: 0.85;">📍 {{ trip.destination }}</p>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap">
+      <button onclick="history.back()" class="btn btn-outline-light">⬅ Back</button>
+      <a href="{% url 'add_expense' trip.id %}" class="btn btn-warning fw-semibold">+ Add Expense</a>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="card p-4 h-100 text-center">
+        <p class="mb-2" style="opacity: 0.8;">Total Expense</p>
+        <h2 class="text-warning fw-bold mb-0">₹{{ total }}</h2>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4 h-100 text-center">
+        <p class="mb-2" style="opacity: 0.8;">Start Date</p>
+        <h4 class="fw-bold mb-0">{{ trip.start_date }}</h4>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4 h-100 text-center">
+        <p class="mb-2" style="opacity: 0.8;">End Date</p>
+        <h4 class="fw-bold mb-0">{{ trip.end_date }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-4 shadow">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <h4 class="fw-bold mb-0">Expense History</h4>
+      <span class="badge bg-secondary fs-6">{{ expenses|length }} Expenses</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-dark table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expense in expenses %}
+            <tr>
+              <td>{{ expense.description|default:'--' }}</td>
+              <td>{{ expense.category|default:'--' }}</td>
+              <td class="text-warning fw-semibold">₹{{ expense.amount }}</td>
+              <td>{{ expense.date }}</td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                  <a href="{% url 'edit_expense' expense.id %}" class="btn btn-outline-warning btn-sm">Edit</a>
+                  <a href="{% url 'delete_expense' expense.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-4">No expenses added yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

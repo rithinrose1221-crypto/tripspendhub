@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div>
+        <h2 class="fw-bold mb-1">Your Travel Dashboard ✈️</h2>
+        <p class="text-light mb-0" style="opacity: 0.85;">
+            Manage your trips and track expenses easily
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'trip_create' %}" class="btn btn-warning px-4 fw-semibold">+ New Trip</a>
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center h-100">
+            <p class="stat-label mb-2">Total Trips</p>
+            <h2 class="stat-value">{{ trips|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center h-100">
+            <p class="stat-label mb-2">Active Trips</p>
+            <h2 class="stat-value">{{ active_trips }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center h-100">
+            <p class="stat-label mb-2">Total Expenses</p>
+            <h2 class="stat-value text-warning">₹{{ total_expense }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Trip Cards -->
+<div class="row g-4">
+    {% for trip in trips %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card trip-card p-4 h-100">
+
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h4 class="fw-bold mb-1">{{ trip.title }}</h4>
+                    <p class="mb-0 trip-location">📍 {{ trip.destination }}</p>
+                </div>
+
+                {% if trip.start_date <= today and trip.end_date >= today %}
+                    <span class="badge rounded-pill bg-success">Active</span>
+                {% elif trip.start_date > today %}
+                    <span class="badge rounded-pill bg-info text-dark">Upcoming</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-secondary">Completed</span>
+                {% endif %}
+            </div>
+
+            <div class="trip-info mb-3">
+                <p class="mb-1"><strong>Start:</strong> {{ trip.start_date }}</p>
+                <p class="mb-1"><strong>End:</strong> {{ trip.end_date }}</p>
+            </div>
+
+            <div class="expense-box mb-4">
+                <small class="expense-label">Total Spent</small>
+                <h3 class="expense-value text-warning mb-0">₹{{ trip.total_expense }}</h3>
+            </div>
+
+            <div class="mt-auto">
+                <a href="{% url 'trip_detail' trip.id %}" class="btn btn-dark w-100 fw-semibold">
+                    View Details →
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card p-5 text-center">
+            <h4 class="fw-bold mb-2">No trips yet</h4>
+            <p class="mb-3">Create your first trip to start tracking your travel expenses.</p>
+            <a href="{% url 'trip_create' %}" class="btn btn-warning px-4">Create Trip</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

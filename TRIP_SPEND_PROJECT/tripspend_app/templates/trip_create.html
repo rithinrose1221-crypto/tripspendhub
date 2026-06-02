@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4 shadow">
+    <h3>Create Trip</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="title" class="form-control mb-2" placeholder="Trip Title" required>
+        <input type="text" name="destination" class="form-control mb-2" placeholder="Destination" required>
+        <input type="date" name="start_date" class="form-control mb-2" required>
+        <input type="date" name="end_date" class="form-control mb-2" required>
+        <button class="btn btn-success">Create</button>
+    </form>
+</div>
+
+{% endblock %}
