@@ -161,3 +161,23 @@ def edit_expense(request, pk):
         "expense": expense,
         "categories": categories,
     })
+@login_required
+def profile(request):
+    total_trips = Trip.objects.filter(
+        user=request.user
+    ).count()
+
+    total_expenses = Expense.objects.filter(
+        trip__user=request.user
+    ).aggregate(
+        Sum("amount")
+    )["amount__sum"] or 0
+
+    return render(
+        request,
+        "profile.html",
+        {
+            "total_trips": total_trips,
+            "total_expenses": total_expenses,
+        }
+    )
