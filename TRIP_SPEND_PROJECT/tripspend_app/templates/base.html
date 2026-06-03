@@ -1,226 +1,292 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>TripSpend Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TripSpend</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        color: white;
-        font-family: 'Segoe UI', sans-serif;
-        overflow-x: hidden;
-      }
-      
-      .wrapper {
-        display: flex;
-      }
-      
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e');
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.45);
-      }
-      
-      .sidebar {
-        width: 240px;
-        min-height: 100vh;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(12px);
-        padding: 25px 15px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
-      }
-      
-      .sidebar h3 {
-        margin-bottom: 30px;
-        font-weight: bold;
-      }
-      
-      .sidebar a {
-        display: block;
-        color: white;
-        text-decoration: none;
-        padding: 12px 14px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        transition: 0.3s;
-        font-weight: 500;
-      }
-      
-      .sidebar a:hover {
-        background: rgba(255, 255, 255, 0.12);
-        transform: translateX(5px);
-      }
-      
-      .main {
-        margin-left: 240px;
-        width: calc(100% - 240px);
-        padding: 25px;
-      }
-      
-      .topbar {
-        background: rgba(0, 0, 0, 0.55);
-        backdrop-filter: blur(10px);
-        padding: 14px 20px;
-        border-radius: 14px;
-        margin-bottom: 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      
-      .card {
-        border-radius: 20px;
-        background: rgba(0, 0, 0, 0.58);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        color: white;
-        transition: 0.3s;
-      }
-      
-      .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
-      }
-      
-      .stat-card {
-        min-height: 130px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
-      
-      .stat-label {
-        font-size: 15px;
-        opacity: 0.85;
-        letter-spacing: 0.5px;
-      }
-      
-      .stat-value {
-        font-size: 40px;
-        font-weight: 700;
-        margin: 0;
-      }
-      
-      .trip-card h4 {
-        font-size: 32px;
-      }
-      
-      .trip-location {
-        font-size: 18px;
-        opacity: 0.92;
-      }
-      
-      .trip-info p {
-        color: rgba(255, 255, 255, 0.88);
-        font-size: 15px;
-      }
-      
-      .expense-box {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 14px;
-        padding: 14px 16px;
-      }
-      
-      .expense-label {
-        display: block;
-        color: rgba(255, 255, 255, 0.75);
-        margin-bottom: 4px;
-        font-size: 14px;
-      }
-      
-      .expense-value {
-        font-size: 24px;
-        font-weight: 700;
-      }
-      
-      .btn {
-        border-radius: 12px;
-        transition: 0.3s;
-      }
-      
-      .btn:hover {
-        transform: scale(1.03);
-      }
-      
-      .alert {
-        border-radius: 10px;
-      }
-      
-      @media (max-width: 768px) {
-        .sidebar {
-          position: relative;
-          width: 100%;
-          min-height: auto;
+
+        *{
+            font-family: 'Inter', sans-serif;
         }
-      
-        .main {
-          margin-left: 0;
-          width: 100%;
+
+        body{
+            margin:0;
+            background:#0f172a;
+            color:white;
+            min-height:100vh;
         }
-      
-        .topbar {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
+
+        /* Sidebar */
+
+        .sidebar{
+            width:260px;
+            height:100vh;
+            position:fixed;
+            left:0;
+            top:0;
+            background:#111827;
+            border-right:1px solid rgba(255,255,255,.05);
+            padding:25px;
+            overflow-y:auto;
         }
-      }
+
+        .logo{
+            margin-bottom:40px;
+        }
+
+        .logo h3{
+            font-weight:700;
+            margin-bottom:5px;
+        }
+
+        .logo small{
+            color:#94a3b8;
+        }
+
+        .menu-title{
+            color:#64748b;
+            font-size:12px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            margin-bottom:10px;
+        }
+
+        .sidebar a{
+            display:block;
+            text-decoration:none;
+            color:#e2e8f0;
+            padding:12px 15px;
+            border-radius:12px;
+            margin-bottom:8px;
+            transition:.3s;
+        }
+
+        .sidebar a:hover{
+            background:#1e293b;
+            color:white;
+        }
+
+        .sidebar a i{
+            margin-right:10px;
+        }
+
+        /* Main */
+
+        .main{
+            margin-left:260px;
+            padding:30px;
+        }
+
+        /* Topbar */
+
+        .topbar{
+            background:#111827;
+            border-radius:18px;
+            padding:18px 25px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:30px;
+        }
+
+        .topbar h4{
+            margin:0;
+            font-weight:700;
+        }
+
+        .topbar small{
+            color:#94a3b8;
+        }
+
+        /* Cards */
+
+        .card{
+            background:#111827;
+            border:none;
+            border-radius:20px;
+            color:white;
+            transition:.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-4px);
+        }
+
+        /* Stats */
+
+        .stat-card{
+            padding:25px;
+        }
+
+        .stat-label{
+            color:#94a3b8;
+            font-size:14px;
+        }
+
+        .stat-value{
+            font-size:38px;
+            font-weight:700;
+        }
+
+        /* Buttons */
+
+        .btn-warning{
+            background:#f59e0b;
+            border:none;
+        }
+
+        .btn-warning:hover{
+            background:#d97706;
+        }
+
+        .btn-dark{
+            background:#1e293b;
+            border:none;
+        }
+
+        /* Form */
+
+        .form-control{
+            background:#1e293b;
+            border:none;
+            color:white;
+            padding:12px;
+        }
+
+        .form-control:focus{
+            background:#1e293b;
+            color:white;
+            box-shadow:none;
+        }
+
+        .form-control::placeholder{
+            color:#94a3b8;
+        }
+
+        /* Tables */
+
+        .table{
+            color:white;
+        }
+
+        .table-dark{
+            --bs-table-bg:#111827;
+        }
+
+        /* Mobile */
+
+        @media(max-width:768px){
+
+            .sidebar{
+                width:100%;
+                height:auto;
+                position:relative;
+            }
+
+            .main{
+                margin-left:0;
+            }
+
+            .topbar{
+                flex-direction:column;
+                align-items:flex-start;
+                gap:10px;
+            }
+
+        }
+
     </style>
-  </head>
+</head>
 
-  <body>
-    <div class="wrapper">
-      <!-- Sidebar -->
-      <div class="sidebar">
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
         <h3>✈️ TripSpend</h3>
+        <small>Travel Expense Manager</small>
+    </div>
 
-        <a href="/">🏠 Dashboard</a>
-        <a href="{% url 'trip_create' %}">➕ Create Trip</a>
+    <div class="menu-title">
+        Navigation
+    </div>
 
-        <hr style="border-color: rgba(255,255,255,0.15);" />
+    <a href="{% url 'trip_list' %}">
+        <i class="bi bi-grid"></i>
+        Dashboard
+    </a>
 
-        {% if user.is_authenticated %}
-          <a href="#">👤 {{ user.username }}</a>
-          <a href="{% url 'logout' %}">🚪 Logout</a>
-        {% else %}
-          <a href="{% url 'login' %}">🔐 Login</a>
-          <a href="{% url 'signup' %}">📝 Sign Up</a>
-        {% endif %}
-      </div>
+    <a href="{% url 'trip_create' %}">
+        <i class="bi bi-plus-circle"></i>
+        New Trip
+    </a>
 
-      <!-- Main -->
-      <div class="main">
-        <!-- Topbar -->
-        <div class="topbar">
-          <div class="d-flex align-items-center gap-2">
-            <h5 class="mb-0">Dashboard</h5>
-          </div>
+    <a href="{% url 'profile' %}">
+        <i class="bi bi-person-circle"></i>
+        Profile
+    </a>
 
-          {% if user.is_authenticated %}
-            <span>Welcome 👋 {{ user.username }}</span>
-          {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'profile' %}">
+        👤 Profile
+    </a>
+
+    <a href="{% url 'logout' %}">
+        🚪 Logout
+    </a>
+{% else %}
+    <a href="{% url 'login' %}">
+        <i class="bi bi-box-arrow-in-right"></i>
+        Login
+    </a>
+
+    <a href="{% url 'signup' %}">
+        <i class="bi bi-person-plus"></i>
+        Sign Up
+    </a>
+    {% endif %}
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h4>Trip Dashboard</h4>
+            <small>Track trips and expenses effortlessly</small>
         </div>
 
-        <!-- Messages -->
-        {% for message in messages %}
-          <div class="alert alert-warning shadow-sm">{{ message }}</div>
-        {% endfor %}
+        {% if user.is_authenticated %}
+        <div>
+            👋 Welcome, {{ user.username }}
+        </div>
+        {% endif %}
 
-        <!-- Content -->
-        {% block content %}
-
-        {% endblock %}
-      </div>
     </div>
-  </body>
+
+    {% for message in messages %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
 </html>
