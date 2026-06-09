@@ -13,7 +13,7 @@ from .models import Trip, Expense, ExpenseCategory
 def signup_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
-        email = request.POST.get("email")
+        email = request.POST.get("email", "")
         password = request.POST.get("password")
 
         if User.objects.filter(username=username).exists():
@@ -22,8 +22,8 @@ def signup_view(request):
 
         user = User.objects.create_user(
             username=username,
-            email=email,
-            password=password
+            password=password,
+            email=email
         )
         login(request, user)
         return redirect("trip_list")
